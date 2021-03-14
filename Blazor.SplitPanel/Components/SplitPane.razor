@@ -1,0 +1,8 @@
+﻿@inherits SplitComponentBase
+@if (Parent.Panes.IndexOf(this) > 0)
+{
+    <Gutter Pair="Parent.GetPanePair(this)"></Gutter>
+}
+<div id="@Id" class="split-pane" style="@SizeStyle" @ref="PaneElement">
+    @ChildContent
+</div>

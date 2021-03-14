@@ -1,0 +1,11 @@
+﻿.split-area {
+    display:flex;
+}
+
+.split-area__horizontal {
+    flex-direction:row;
+}
+
+.split-area__vertical {
+    flex-direction:column;
+}

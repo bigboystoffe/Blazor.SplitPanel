@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31105.61
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.SplitPanel", "Blazor.SplitPanel\Blazor.SplitPanel.csproj", "{E70A2DCD-2055-4B7F-835B-0721DE12C542}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.SplitPanel.Test", "Blazor.SplitPanel.Test\Blazor.SplitPanel.Test.csproj", "{BCB21304-B125-429C-8853-F56DC0156466}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E70A2DCD-2055-4B7F-835B-0721DE12C542}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E70A2DCD-2055-4B7F-835B-0721DE12C542}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E70A2DCD-2055-4B7F-835B-0721DE12C542}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E70A2DCD-2055-4B7F-835B-0721DE12C542}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCB21304-B125-429C-8853-F56DC0156466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCB21304-B125-429C-8853-F56DC0156466}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCB21304-B125-429C-8853-F56DC0156466}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCB21304-B125-429C-8853-F56DC0156466}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DAE0F9E1-E6E2-4B7E-84C3-8677EE80BF04}
+	EndGlobalSection
+EndGlobal

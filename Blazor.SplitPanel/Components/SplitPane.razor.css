@@ -1,0 +1,7 @@
+﻿.split-pane {
+
+}
+
+.split-pane__dragging {
+    user-select: none;
+} 
