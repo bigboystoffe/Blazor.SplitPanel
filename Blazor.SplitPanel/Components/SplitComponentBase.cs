@@ -11,6 +11,9 @@ namespace Blazor.SplitPanel.Components
     {
         public string Id { get; private set; }
 
+        [Inject]
+        public SplitJsInterop JsInterop { get; set; }
+
         protected override void OnInitialized()
         {
             base.OnInitialized();

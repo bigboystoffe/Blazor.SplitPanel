@@ -2,6 +2,7 @@
 using Majorsoft.Blazor.Components.Common.JsInterop.GlobalMouseEvents;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,9 @@ namespace Blazor.SplitPanel.Components
     {
         [Inject]
         private IGlobalMouseEventHandler MouseEventHandler { get; set; }
+
+        [Inject]
+        private SplitJsInterop JsInterop { get; set; }
 
         private double _size;
         private double _start, _end;
@@ -48,6 +52,9 @@ namespace Blazor.SplitPanel.Components
 
             _mouseMove = await MouseEventHandler.RegisterPageMouseMoveAsync(OnDragAsync);
             _mouseUp = await MouseEventHandler.RegisterPageMouseUpAsync(OnDragEndAsync);
+
+            await JsInterop.SetElementStyleAsync(Pair.Item1.PaneElement, "userSelect", "none");
+            await JsInterop.SetElementStyleAsync(Pair.Item2.PaneElement, "userSelect", "none");
         }
 
         public Task OnDragAsync(MouseEventArgs e)
@@ -82,6 +89,9 @@ namespace Blazor.SplitPanel.Components
 
             await MouseEventHandler.RemovePageMouseMoveAsync(_mouseMove);
             await MouseEventHandler.RemovePageMouseUpAsync(_mouseUp);
+
+            await JsInterop.SetElementStyleAsync(Pair.Item1.PaneElement, "userSelect", "");
+            await JsInterop.SetElementStyleAsync(Pair.Item2.PaneElement, "userSelect", "");
         }
 
         private double GetMousePosition(MouseEventArgs e)
