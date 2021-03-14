@@ -22,6 +22,7 @@ namespace Blazor.SplitPanel.Components
 
         private string _mouseMove, _mouseUp;
 
+
         [CascadingParameter(Name = "SplitArea")]
         public SplitArea Parent { get; set; }
 
@@ -57,15 +58,21 @@ namespace Blazor.SplitPanel.Components
             var mousePosition = GetMousePosition(e);
 
             var offset = mousePosition - _start + (Parent.GutterSize - _dragOffset);
+            
+            if (offset <= Pair.Item1.MinSize + Parent.GutterSize)
+            {
+                offset = Pair.Item1.MinSize + Parent.GutterSize;
+            }
+            else if (offset >= _size - (Pair.Item2.MinSize + Parent.GutterSize))
+            {
+                offset = _size - (Pair.Item2.MinSize + Parent.GutterSize);
+            }
 
-
-            var aSize = Math.Clamp((offset / _size) * 100, 0, 100);
-            var bSize = Math.Clamp(100 - ((offset / _size) * 100), 0, 100);
+            var aSize = (offset / _size) * 100;
+            var bSize = 100 - (offset / _size) * 100;
 
             Pair.Item1.SetSize(aSize);
             Pair.Item2.SetSize(bSize);
-
-            Console.WriteLine($"aSize: {aSize} bSize: {bSize} offset: {offset} _size: {_size}");
             return Task.CompletedTask;
         }
 
@@ -76,7 +83,6 @@ namespace Blazor.SplitPanel.Components
             await MouseEventHandler.RemovePageMouseMoveAsync(_mouseMove);
             await MouseEventHandler.RemovePageMouseUpAsync(_mouseUp);
         }
-
 
         private double GetMousePosition(MouseEventArgs e)
         {
