@@ -1,8 +1,8 @@
-name: .NET
+name: Publish
 
 on:
   release:
-    types: [published, prereleased]
+    types: [published]
 
 jobs:
   build:
@@ -26,15 +26,3 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
       
-    - name: Copy Files
-      uses: actions/CopyFiles@2
-      with:
-         SourceFolder: '$(Build.ArtifactStagingDirectory)'
-         Contents: '**\*.nupkg'
-         TargetFolder: '$(Build.ArtifactStagingDirectory)\Package'
-         
-    - name: PublishBuildArtifacts
-      uses: actions/PublishBuildArtifacts@1
-      with:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)\Package'
-    
