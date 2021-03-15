@@ -1,5 +1,6 @@
 # Blazor.SplitPanel
 Inspired by [Split-js](https://split.js.org/)
+
 [![Github /CI](https://github.com/crikke/Blazor.SplitPanel/actions/workflows/CI-github.yml/badge.svg?branch=master)](https://github.com/crikke/Blazor.SplitPanel/actions/workflows/CI-github.yml)
 
 ## Usage
