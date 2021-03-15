@@ -26,4 +26,3 @@ Inspired by [Split-js](https://split.js.org/)
 ## TODO for further release
 - Remove dependency on Majorsoft.Blazor.Components.Common.JsInterop
 - Expose events OnDrag, OnDragStart, OnDragEnd
-- 
