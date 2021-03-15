@@ -1,8 +1,6 @@
 # Blazor.SplitPanel
 Inspired by [Split-js](https://split.js.org/)
 
-[![Build](https://github.com/crikke/Blazor.SplitPanel/actions/workflows/CI-github.yml/badge.svg)](https://github.com/crikke/Blazor.SplitPanel/actions/workflows/CI-github.yml)
-
 ## Usage 
 ```HTML
 <SplitArea GutterSize="8" Direction="SplitDirection.Vertical">
