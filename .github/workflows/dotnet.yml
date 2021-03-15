@@ -27,14 +27,14 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       
     - name: Copy Files
-      uses: CopyFiles@2
+      uses: actions/CopyFiles@2
       with:
          SourceFolder: '$(Build.ArtifactStagingDirectory)'
          Contents: '**\*.nupkg'
          TargetFolder: '$(Build.ArtifactStagingDirectory)\Package'
          
     - name: PublishBuildArtifacts
-      uses: PublishBuildArtifacts@1
+      uses: actions/PublishBuildArtifacts@1
       with:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)\Package'
     
