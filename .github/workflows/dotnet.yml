@@ -33,5 +33,5 @@ jobs:
       uses: PublishBuildArtifacts@1
       with:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)\Package'
-  co  ndition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+      if: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
     
