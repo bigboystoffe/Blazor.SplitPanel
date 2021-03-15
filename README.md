@@ -1,5 +1,5 @@
 # Blazor.SplitPanel
-Inspired by [Split-js](https://split.js.org/) 
+Inspired by [Split-js](https://split.js.org/)
 
 ## Usage
 ```HTML
@@ -23,3 +23,4 @@ Inspired by [Split-js](https://split.js.org/)
 
 ## TODO for further release
 - Remove dependency on Majorsoft.Blazor.Components.Common.JsInterop
+- Expose events OnDrag, OnDragStart, OnDragEnd 
