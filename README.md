@@ -1,5 +1,6 @@
 # Blazor.SplitPanel
 Inspired by [Split-js](https://split.js.org/)
+[![Github /CI](https://github.com/crikke/Blazor.SplitPanel/actions/workflows/CI-github.yml/badge.svg?branch=master)](https://github.com/crikke/Blazor.SplitPanel/actions/workflows/CI-github.yml)
 
 ## Usage
 ```HTML
@@ -15,7 +16,7 @@ Inspired by [Split-js](https://split.js.org/)
 
 ## TODO for release v1.0
 - Implement vertical splitpanel, should be just making sure css works.
-- Setting up Azure Pipelines CI/CD
+- Setting up Azure Pipelines/github CI/CD
 - - Set up nuget publish 
 - Unit tests
 - - Testing nested SplitAreas
