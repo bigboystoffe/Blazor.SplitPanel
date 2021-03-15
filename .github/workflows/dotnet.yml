@@ -1,10 +1,8 @@
 name: .NET
 
 on:
-  push:
-    branches:
-      – refs/tags/*
-
+  release:
+    types: [published, prereleased]
 
 jobs:
   build:
