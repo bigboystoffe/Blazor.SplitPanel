@@ -1,8 +1,6 @@
 # Blazor.SplitPanel
 Inspired by [Split-js](https://split.js.org/)
 
-[![Build](https://github.com/crikke/Blazor.SplitPanel/actions/workflows/CI-github.yml/badge.svg)](https://github.com/crikke/Blazor.SplitPanel/actions/workflows/CI-github.yml)
-
 ## Usage 
 ```HTML
 <SplitArea GutterSize="8" Direction="SplitDirection.Vertical">
@@ -26,4 +24,3 @@ Inspired by [Split-js](https://split.js.org/)
 ## TODO for further release
 - Remove dependency on Majorsoft.Blazor.Components.Common.JsInterop
 - Expose events OnDrag, OnDragStart, OnDragEnd
-- 
