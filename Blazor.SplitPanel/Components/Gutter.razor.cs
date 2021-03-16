@@ -53,18 +53,19 @@ namespace Blazor.SplitPanel.Components
             _mouseMove = await MouseEventHandler.RegisterPageMouseMoveAsync(OnDragAsync);
             _mouseUp = await MouseEventHandler.RegisterPageMouseUpAsync(OnDragEndAsync);
 
+            //Console.WriteLine($"DragStart - size: {_size} start: {_start} dragoffset: {_dragOffset} aSize: {aSize} bSize: {bSize}");
+
             await JsInterop.SetElementStyleAsync(Pair.Item1.PaneElement, "userSelect", "none");
             await JsInterop.SetElementStyleAsync(Pair.Item2.PaneElement, "userSelect", "none");
         }
 
-        public Task OnDragAsync(MouseEventArgs e)
+        public async Task OnDragAsync(MouseEventArgs e)
         {
             if (!_isDragging)
-                return Task.CompletedTask;
+                return;
 
-            var mousePosition = GetMousePosition(e);
-
-            var offset = mousePosition - _start + (Parent.GutterSize - _dragOffset);
+            var percentage = (Pair.Item1.Size ?? 0) + (Pair.Item2.Size ?? 0);
+            var offset = GetMousePosition(e) - _start + (Parent.GutterSize - _dragOffset);
             
             if (offset <= Pair.Item1.MinSize + Parent.GutterSize)
             {
@@ -75,12 +76,13 @@ namespace Blazor.SplitPanel.Components
                 offset = _size - (Pair.Item2.MinSize + Parent.GutterSize);
             }
 
-            var aSize = (offset / _size) * 100;
-            var bSize = 100 - (offset / _size) * 100;
+            var aSize = (offset / _size) * percentage;
+            var bSize = percentage - ((offset / _size) * percentage);
 
-            Pair.Item1.SetSize(aSize);
-            Pair.Item2.SetSize(bSize);
-            return Task.CompletedTask;
+            //Console.WriteLine($"OnDrag - aSize: {aSize} bSize: {bSize} ofsett: {offset}");
+
+            await Pair.Item1.SetSizeAsync(aSize);
+            await Pair.Item2.SetSizeAsync(bSize);
         }
 
         public async Task OnDragEndAsync(MouseEventArgs e)

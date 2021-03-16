@@ -1,5 +1,7 @@
 ﻿.split-area {
     display:flex;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .split-area__horizontal {

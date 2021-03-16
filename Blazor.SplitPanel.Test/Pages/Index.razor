@@ -1,13 +1,22 @@
 ﻿@page "/"
 
 <SplitArea GutterSize="8">
-    <SplitPane MinSize="300">
+    <SplitPane CssClass="card" Size="50" MinSize="300">
         Hej
     </SplitPane>
-    <SplitPane MinSize="300">
+    <SplitPane CssClass="card" MinSize="300">
         Hej
     </SplitPane>
-    <SplitPane MinSize="300">
+    <SplitPane CssClass="card" MinSize="300">
         Hej
     </SplitPane>
 </SplitArea>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await Task.Delay(2000);
+    }
+} 

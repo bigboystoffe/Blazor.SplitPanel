@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Blazor.SplitPanel.Components
@@ -12,7 +13,7 @@ namespace Blazor.SplitPanel.Components
     {
         private string cursor;
         private string gutterClass;
-        private string splitAreaClass;
+        private string _directionClass;
 
         public List<SplitPane> Panes { get; private set; }
 
@@ -24,6 +25,9 @@ namespace Blazor.SplitPanel.Components
 
         [Parameter]
         public SplitDirection Direction { get; set; }
+
+        [Parameter]
+        public string CssClass { get; set; }
 
         [Parameter]
         public string Cursor
@@ -39,10 +43,10 @@ namespace Blazor.SplitPanel.Components
             set => gutterClass = value;
         }
 
-        public string SplitAreaClass
+        public string DirectionClass
         {
-            get => splitAreaClass ?? (Direction == SplitDirection.Horizontal ? "split-area split-area__horizontal" : "split-area split-area__vertical");
-            set => splitAreaClass = value;
+            get => _directionClass ?? (Direction == SplitDirection.Horizontal ? "split-area split-area__horizontal" : "split-area split-area__vertical");
+            set => _directionClass = value;
         }
 
         public void AddPane(SplitPane pane)
@@ -56,15 +60,31 @@ namespace Blazor.SplitPanel.Components
             return new(Panes[Panes.IndexOf(pane) - 1], pane);
         }
 
-        protected override void OnAfterRender(bool firstRender)
+        public double GetPaneAutoSize()
         {
-            base.OnAfterRender(firstRender);
+            var availibleSize = 100 - Panes.Sum(x => x.Size ?? 0);
+
+            var panesWithoutInitialSize = Panes.Where(x => !x.Size.HasValue);
+
+            return availibleSize / panesWithoutInitialSize.Count();
         }
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
             Panes = new List<SplitPane>();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+            if (firstRender)
+            {
+                foreach (var pane in Panes.Where(x => !x.Size.HasValue))
+                {
+                    await pane.SetSizeAsync(GetPaneAutoSize());
+                }
+            }
         }
     }
 }

@@ -10,8 +10,12 @@ namespace Blazor.SplitPanel.Components
 {
     public partial class SplitPane
     {
+
         [CascadingParameter(Name = "SplitArea")]
         public SplitArea Parent { get; set; }
+
+        [Parameter]
+        public string CssClass { get; set; }
 
         [Parameter]
         public int MinSize { get; set; }
@@ -19,20 +23,31 @@ namespace Blazor.SplitPanel.Components
         [Parameter]
         public RenderFragment ChildContent { get; set; }
 
-        public double Size { get; set; } = 50;
+        [Parameter]
+        public double? Size { get; set; }
+
         public ElementReference PaneElement { get; set; }
 
-        public string SizeStyle => $"flex-basis: {Size.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." })}%;";
-        public void SetSize(double size)
+        private string SizeStyle => $"{Size.GetValueOrDefault(Parent.GetPaneAutoSize()).ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." })}%;";
+
+        public Task SetSizeAsync(double size)
         {
             Size = size;
             StateHasChanged();
+
+            return Task.CompletedTask;
         }
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            base.OnInitialized();
+            await base.OnInitializedAsync();
             Parent.AddPane(this);
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+            await JsInterop.SetElementStyleAsync(PaneElement, "flexBasis", SizeStyle);
         }
     }
 }
