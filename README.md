@@ -5,8 +5,19 @@ Inspired by [Split-js](https://split.js.org/)
 [![NuGet version](https://badge.fury.io/nu/Blazor.SplitPanel.svg)](https://badge.fury.io/nu/Blazor.SplitPanel)
 
 ## Installation
-- Add builder.AddSplitPanelJS() in Program.cs
-- Optionally add @using Blazor.SplitPanel in _Imports.razor
+### In Program.cs
+Add following:
+
+````
+builder.Services
+  .AddSplitPanelJS()
+  .AddJsInteropExtensions();
+````
+
+Add following using in _Imports.razor
+````
+@using Blazor.SplitPanel
+````
 
 ## Usage 
 ```HTML
