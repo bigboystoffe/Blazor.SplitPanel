@@ -1,7 +1,12 @@
-name: Test
+name: Build
 
-on: workflow_dispatch 
+on:
+  push:
+    branches: [ master ]
 
+  pull_request:
+    branches: [ master ]
+    
 jobs:
   build:
 
