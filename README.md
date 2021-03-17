@@ -3,6 +3,11 @@ Inspired by [Split-js](https://split.js.org/)
 
 [![Build](https://github.com/bigboystoffe/Blazor.SplitPanel/actions/workflows/dotnet.yml/badge.svg)](https://github.com/bigboystoffe/Blazor.SplitPanel/actions/workflows/dotnet.yml)
 [![NuGet version](https://badge.fury.io/nu/Blazor.SplitPanel.svg)](https://badge.fury.io/nu/Blazor.SplitPanel)
+
+## Installation
+- Add builder.AddSplitPanelJS() in Program.cs
+- Optionally add @using Blazor.SplitPanel in _Imports.razor
+
 ## Usage 
 ```HTML
 <SplitArea GutterSize="8" Direction="SplitDirection.Vertical">
