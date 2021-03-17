@@ -28,14 +28,17 @@ namespace Blazor.SplitPanel.Components
 
         public ElementReference PaneElement { get; set; }
 
-        private string SizeStyle => $"{Size.GetValueOrDefault(Parent.GetPaneAutoSize()).ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." })}%;";
+        private string SizeStyle => $"{Size.GetValueOrDefault(Parent.GetPaneAutoSize()).ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." })}%";
 
-        public Task SetSizeAsync(double size)
+        public async Task SetSizeAsync(double size, bool shouldRender = true)
         {
             Size = size;
-            StateHasChanged();
 
-            return Task.CompletedTask;
+            // shouldrender is false when parent SplitArea initially sets size auto to splitpanes without an initial size
+            if (shouldRender)
+            {
+                await JsInterop.SetElementStyleAsync(PaneElement, "flexBasis", SizeStyle);
+            }
         }
 
         protected override async Task OnInitializedAsync()
@@ -46,8 +49,10 @@ namespace Blazor.SplitPanel.Components
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await base.OnAfterRenderAsync(firstRender);
-            await JsInterop.SetElementStyleAsync(PaneElement, "flexBasis", SizeStyle);
+            if (firstRender)
+            {
+                await JsInterop.SetElementStyleAsync(PaneElement, "flexBasis", SizeStyle);
+            }
         }
     }
 }

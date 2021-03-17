@@ -1,22 +1,35 @@
 ﻿@page "/"
+<div class="row">
 
-<SplitArea GutterSize="8">
-    <SplitPane CssClass="card" Size="50" MinSize="300">
-        Hej
-    </SplitPane>
-    <SplitPane CssClass="card" MinSize="300">
-        Hej
-    </SplitPane>
-    <SplitPane CssClass="card" MinSize="300">
-        Hej
-    </SplitPane>
-</SplitArea>
-
-@code {
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-
-        await Task.Delay(2000);
-    }
-} 
+    <SplitArea GutterSize="10">
+        <SplitPane CssClass="card" Size="50" MinSize="300">
+            Hej
+        </SplitPane>
+        <SplitPane CssClass="card" MinSize="300">
+            Hej
+        </SplitPane>
+        <SplitPane CssClass="card" MinSize="300">
+            <SplitArea GutterSize="10" Direction="Models.SplitDirection.Vertical">
+                <SplitPane CssClass="card" Size="50">
+                    A
+                </SplitPane>
+                <SplitPane CssClass="card">
+                    B
+                </SplitPane>
+            </SplitArea>
+        </SplitPane>
+    </SplitArea>
+</div>
+@*<div class="row mt-5" style="height: 50%;">
+    <SplitArea GutterSize="10" Direction="Models.SplitDirection.Vertical">
+        <SplitPane CssClass="card" Size="50">
+            Hej
+        </SplitPane>
+        <SplitPane CssClass="card">
+            Hej
+        </SplitPane>
+        <SplitPane CssClass="card">
+            Hej
+        </SplitPane>
+    </SplitArea>
+</div>*@

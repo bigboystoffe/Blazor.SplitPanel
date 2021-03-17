@@ -43,11 +43,17 @@ namespace Blazor.SplitPanel.Components
             set => gutterClass = value;
         }
 
+        [Parameter]
         public string DirectionClass
         {
             get => _directionClass ?? (Direction == SplitDirection.Horizontal ? "split-area split-area__horizontal" : "split-area split-area__vertical");
             set => _directionClass = value;
         }
+
+        [Parameter]
+        public EventHandler<(SplitPane, SplitPane)> OnDragStart { get; set; }
+        [Parameter]
+        public EventHandler<(SplitPane, SplitPane)> OnDragEnd { get; set; }
 
         public void AddPane(SplitPane pane)
         {
@@ -63,11 +69,36 @@ namespace Blazor.SplitPanel.Components
         public double GetPaneAutoSize()
         {
             var availibleSize = 100 - Panes.Sum(x => x.Size ?? 0);
-
             var panesWithoutInitialSize = Panes.Where(x => !x.Size.HasValue);
 
             return availibleSize / panesWithoutInitialSize.Count();
         }
+
+        public async Task DragStartAsync((SplitPane, SplitPane) pair)
+        {
+            List<Task> tasks = new();
+            foreach (var pane in Panes)
+            {
+                var task = pane.JsInterop.SetElementStyleAsync(pane.PaneElement, "userSelect", "none");
+                tasks.Add(task);
+            }
+
+            await Task.WhenAll(tasks);
+        }
+
+        public async Task DragEndAsync((SplitPane, SplitPane) pair)
+        {
+            List<Task> tasks = new List<Task>();
+            foreach (var pane in Panes)
+            {
+                var task = pane.JsInterop.SetElementStyleAsync(pane.PaneElement, "userSelect", "");
+                tasks.Add(task);
+            }
+
+            await Task.WhenAll(tasks);
+        }
+
+
 
         protected override void OnInitialized()
         {
@@ -82,7 +113,7 @@ namespace Blazor.SplitPanel.Components
             {
                 foreach (var pane in Panes.Where(x => !x.Size.HasValue))
                 {
-                    await pane.SetSizeAsync(GetPaneAutoSize());
+                    await pane.SetSizeAsync(GetPaneAutoSize(), false);
                 }
             }
         }

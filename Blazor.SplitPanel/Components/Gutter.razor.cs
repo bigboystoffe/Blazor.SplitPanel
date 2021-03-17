@@ -31,11 +31,11 @@ namespace Blazor.SplitPanel.Components
         public SplitArea Parent { get; set; }
 
         [Parameter]
-        public (SplitPane,SplitPane) Pair { get; set; }
+        public (SplitPane, SplitPane) Pair { get; set; }
 
         public string GutterStyle { get; private set; }
 
-        public async Task OnDragStart(MouseEventArgs e)
+        public async Task DragStart(MouseEventArgs e)
         {
             var a = await Pair.Item1.PaneElement.GetClientRectAsync();
             var b = await Pair.Item2.PaneElement.GetClientRectAsync();
@@ -47,26 +47,23 @@ namespace Blazor.SplitPanel.Components
             _start = Parent.Direction == Models.SplitDirection.Horizontal ? a.Left : a.Top;
             _end = Parent.Direction == Models.SplitDirection.Horizontal ? a.Right : a.Bottom;
 
-            _dragOffset =  GetMousePosition(e) - _end;
+            _dragOffset = GetMousePosition(e) - _end;
             _isDragging = true;
 
-            _mouseMove = await MouseEventHandler.RegisterPageMouseMoveAsync(OnDragAsync);
-            _mouseUp = await MouseEventHandler.RegisterPageMouseUpAsync(OnDragEndAsync);
+            _mouseMove = await MouseEventHandler.RegisterPageMouseMoveAsync(DragAsync);
+            _mouseUp = await MouseEventHandler.RegisterPageMouseUpAsync(DragEndAsync);
 
-            //Console.WriteLine($"DragStart - size: {_size} start: {_start} dragoffset: {_dragOffset} aSize: {aSize} bSize: {bSize}");
-
-            await JsInterop.SetElementStyleAsync(Pair.Item1.PaneElement, "userSelect", "none");
-            await JsInterop.SetElementStyleAsync(Pair.Item2.PaneElement, "userSelect", "none");
+            await Parent.DragStartAsync(Pair);
         }
 
-        public async Task OnDragAsync(MouseEventArgs e)
+        public async Task DragAsync(MouseEventArgs e)
         {
             if (!_isDragging)
                 return;
 
             var percentage = (Pair.Item1.Size ?? 0) + (Pair.Item2.Size ?? 0);
             var offset = GetMousePosition(e) - _start + (Parent.GutterSize - _dragOffset);
-            
+
             if (offset <= Pair.Item1.MinSize + Parent.GutterSize)
             {
                 offset = Pair.Item1.MinSize + Parent.GutterSize;
@@ -79,28 +76,22 @@ namespace Blazor.SplitPanel.Components
             var aSize = (offset / _size) * percentage;
             var bSize = percentage - ((offset / _size) * percentage);
 
-            //Console.WriteLine($"OnDrag - aSize: {aSize} bSize: {bSize} ofsett: {offset}");
-
             await Pair.Item1.SetSizeAsync(aSize);
             await Pair.Item2.SetSizeAsync(bSize);
         }
 
-        public async Task OnDragEndAsync(MouseEventArgs e)
+        public async Task DragEndAsync(MouseEventArgs e)
         {
             _isDragging = false;
 
-            await MouseEventHandler.RemovePageMouseMoveAsync(_mouseMove);
-            await MouseEventHandler.RemovePageMouseUpAsync(_mouseUp);
-
-            await JsInterop.SetElementStyleAsync(Pair.Item1.PaneElement, "userSelect", "");
-            await JsInterop.SetElementStyleAsync(Pair.Item2.PaneElement, "userSelect", "");
+            await Task.WhenAll(
+                MouseEventHandler.RemovePageMouseMoveAsync(_mouseMove),
+                MouseEventHandler.RemovePageMouseUpAsync(_mouseUp),
+                Parent.DragEndAsync(Pair)
+            );
         }
 
-        private double GetMousePosition(MouseEventArgs e)
-        {
-            return Parent.Direction == Models.SplitDirection.Horizontal ? e.ClientX : e.ClientY;
-
-        }
+        private double GetMousePosition(MouseEventArgs e) => Parent.Direction == Models.SplitDirection.Horizontal ? e.ClientX : e.ClientY;
 
         protected override void OnInitialized()
         {
