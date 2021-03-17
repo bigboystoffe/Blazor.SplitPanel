@@ -15,14 +15,5 @@ Inspired by [Split-js](https://split.js.org/)
 </SplitArea>
 ```
 
-## TODO for release v1.0
-- Implement vertical splitpanel, should be just making sure css works.
-- Setting up Azure Pipelines/github CI/CD
-- - Set up nuget publish 
-- Unit tests
-- - Testing nested SplitAreas
-- Create Demo
-
 ## TODO for further release
 - Remove dependency on Majorsoft.Blazor.Components.Common.JsInterop
-- Expose events OnDrag, OnDragStart, OnDragEnd
