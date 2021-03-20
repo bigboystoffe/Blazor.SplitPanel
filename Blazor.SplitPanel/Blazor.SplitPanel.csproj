@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <Authors>Christopher Jansson</Authors>
+    <Product />
+    <Description>A split panel component library for Blazor inpired by SplitJS</Description>
+    <Copyright>Christopher Jansson</Copyright>
+    <PackageProjectUrl>https://github.com/bigboystoffe/Blazor.SplitPanel</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/bigboystoffe/Blazor.SplitPanel</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
+    <PackageTags>Blazor SplitJS</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

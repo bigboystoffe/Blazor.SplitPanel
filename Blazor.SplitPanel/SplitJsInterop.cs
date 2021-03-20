@@ -20,18 +20,10 @@ namespace Blazor.SplitPanel
                 "./_content/Blazor.SplitPanel/Blazor.SplitPanel.js").AsTask());
         }
 
-
         public async Task SetElementStyleAsync(ElementReference elementReference, string property, string value)
         {
             var module = await _module.Value;
             await module.InvokeVoidAsync("SetElementStyle", elementReference, property, value);
-        }
-
-
-        public async Task Alert (ElementReference elementReference, string property, string value)
-        {
-            var module = await _module.Value;
-            await module.InvokeVoidAsync("Alert", elementReference, property, value);
         }
 
         public async ValueTask DisposeAsync()
